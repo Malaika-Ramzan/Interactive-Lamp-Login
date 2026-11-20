@@ -1,0 +1,811 @@
+
+/* =========================================
+   1. ROOT AND GENERAL SETTINGS
+========================================= */
+
+:root {
+    --cyan: #08dce8;
+    --cyan2: #00aeba;
+    --bg: #061619;
+    --muted: #91a6aa;
+    --gold: #caa45c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: #030b0e;
+    color: #f3ffff;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+/* =========================================
+   2. MAIN SCENE
+========================================= */
+
+.scene {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 28px 5vw 18px;
+
+    background:
+        radial-gradient(
+            ellipse at 24% 54%,
+            rgba(0,119,128,.34),
+            transparent 42%
+        ),
+        radial-gradient(
+            ellipse at 75% 45%,
+            rgba(0,52,60,.2),
+            transparent 48%
+        ),
+        linear-gradient(
+            115deg,
+            #07191d,
+            #061317 55%,
+            #030b0e
+        );
+
+    transition: background .8s;
+}
+
+
+/* =========================================
+   3. BACKGROUND EFFECTS
+========================================= */
+
+.scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: .2;
+
+    background-image:
+        radial-gradient(
+            #b7ffff 1px,
+            transparent 1.5px
+        );
+
+    background-size: 83px 91px;
+    background-position: 12px 17px;
+
+    mask-image:
+        linear-gradient(
+            90deg,
+            #000,
+            transparent 78%
+        );
+}
+
+.stars {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 12% 25%,
+            #c8ffff 1px,
+            transparent 2px
+        ),
+        radial-gradient(
+            circle at 36% 78%,
+            #c8ffff 1px,
+            transparent 2px
+        ),
+        radial-gradient(
+            circle at 49% 18%,
+            #c8ffff 1px,
+            transparent 2px
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            #c8ffff 1px,
+            transparent 2px
+        );
+
+    opacity: .45;
+}
+
+
+/* =========================================
+   4. PAGE HEADING
+========================================= */
+
+.page-heading {
+    text-align: center;
+    padding: 12px 0 22px;
+}
+
+.page-heading h1 {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(25px, 3vw, 42px);
+    font-weight: 700;
+    letter-spacing: .3px;
+    color: #bdfaff;
+
+    text-shadow:
+        0 0 5px #00dce9,
+        0 0 16px rgba(0,222,239,.65);
+}
+
+
+/* =========================================
+   5. MAIN LAYOUT
+========================================= */
+
+.stage {
+    width: min(1120px, 100%);
+    min-height: 610px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    align-items: center;
+    gap: 30px;
+}
+
+
+/* =========================================
+   6. LAMP AREA
+========================================= */
+
+.lamp-side {
+    height: 570px;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.ambient-glow {
+    position: absolute;
+
+    width: 440px;
+    height: 440px;
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -45%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,233,255,.36) 0,
+            rgba(0,181,198,.18) 33%,
+            rgba(0,120,135,.06) 57%,
+            transparent 72%
+        );
+
+    filter: blur(20px);
+    opacity: 0;
+
+    transition:
+        opacity .8s,
+        transform .8s;
+
+    pointer-events: none;
+}
+
+.lamp-art {
+    position: relative;
+    z-index: 1;
+
+    width: min(100%, 410px);
+    height: auto;
+    max-height: 520px;
+
+    overflow: visible;
+
+    filter:
+        drop-shadow(
+            0 18px 24px rgba(0,0,0,.45)
+        );
+}
+
+.floor-shadow {
+    fill: #000;
+    opacity: .5;
+}
+
+.bulb-halo,
+.bulb-core {
+    transition: opacity .7s, fill .7s;
+}
+
+.lamp-body {
+    transform-origin: 177px 440px;
+}
+
+
+/* =========================================
+   7. PULL CORD
+========================================= */
+
+.pull-cord {
+    cursor: grab;
+    touch-action: none;
+}
+
+.pull-cord.dragging {
+    cursor: grabbing;
+}
+
+.pull-cord #cordPull {
+    filter:
+        drop-shadow(
+            0 0 5px rgba(255,218,139,.5)
+        );
+
+    outline: none;
+}
+
+.pull-cord:focus #cordPull {
+    stroke: #fff;
+    stroke-width: 4;
+}
+
+.pull-hint {
+    position: absolute;
+    bottom: 16px;
+
+    color: #9bb8bd;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-align: center;
+
+    z-index: 2;
+    opacity: .82;
+}
+
+
+/* =========================================
+   8. LAMP ON STATE
+========================================= */
+
+.scene.lit {
+    background:
+        radial-gradient(
+            ellipse at 25% 52%,
+            rgba(0,185,197,.34),
+            transparent 48%
+        ),
+        radial-gradient(
+            ellipse at 68% 48%,
+            rgba(0,91,103,.25),
+            transparent 55%
+        ),
+        linear-gradient(
+            115deg,
+            #092126,
+            #061317 60%,
+            #030b0e
+        );
+}
+
+.scene.lit .ambient-glow {
+    opacity: 1;
+    transform: translate(-50%, -45%) scale(1.12);
+}
+
+.scene.lit .bulb-halo {
+    opacity: .85;
+}
+
+.scene.lit .bulb-core {
+    fill: #c9ffff;
+    filter: drop-shadow(0 0 7px #00f0ff);
+}
+
+
+/* =========================================
+   9. AUTHENTICATION SIDE
+========================================= */
+
+.auth-side {
+    display: flex;
+    justify-content: center;
+
+    opacity: 0;
+    transform: translateY(18px) scale(.98);
+    filter: blur(5px);
+
+    pointer-events: none;
+
+    transition:
+        opacity .7s,
+        transform .7s,
+        filter .7s;
+}
+
+.scene.lit .auth-side {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    pointer-events: auto;
+}
+
+
+/* =========================================
+   10. AUTHENTICATION CARD
+========================================= */
+
+.auth-card {
+    width: min(100%, 430px);
+    padding: 28px 25px 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,25,31,.94),
+            rgba(8,17,22,.96)
+        );
+
+    border: 1px solid rgba(117,177,185,.14);
+    border-radius: 23px;
+
+    box-shadow:
+        0 24px 65px rgba(0,0,0,.48),
+        inset 0 1px rgba(255,255,255,.035);
+
+    backdrop-filter: blur(18px);
+}
+
+
+/* =========================================
+   11. CARD HEADING
+========================================= */
+
+.card-heading {
+    margin-bottom: 22px;
+}
+
+.card-heading h2 {
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -.8px;
+}
+
+.card-heading p {
+    font-size: 11px;
+    color: #82969b;
+    margin-top: 5px;
+}
+
+
+/* =========================================
+   12. LOGIN / SIGNUP TABS
+========================================= */
+
+.tabs {
+    height: 39px;
+    padding: 4px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    background: #080f14;
+    border-radius: 10px;
+    margin-bottom: 21px;
+}
+
+.tab {
+    border: 0;
+    border-radius: 8px;
+
+    color: #84979b;
+    background: transparent;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    transition: .25s;
+}
+
+.tab.active {
+    color: #f5ffff;
+    background: #26363c;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.22);
+}
+
+
+/* =========================================
+   13. FORMS
+========================================= */
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.field-label {
+    font-size: 10px;
+    color: #a8b9bd;
+    font-weight: 600;
+    margin: 2px 0 0;
+}
+
+.label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+
+/* =========================================
+   14. INPUT FIELDS
+========================================= */
+
+.link-button,
+.back-link {
+    border: 0;
+    background: none;
+    color: #00dbe7;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.input-wrap {
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0 12px;
+
+    border: 1px solid #24343b;
+    border-radius: 9px;
+
+    background: #131f25;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s;
+}
+
+.input-wrap:focus-within {
+    border-color: #00dce9;
+
+    box-shadow:
+        0 0 0 3px rgba(0,220,233,.08);
+}
+
+.input-wrap input {
+    min-width: 0;
+    flex: 1;
+
+    background: transparent;
+    border: 0;
+    outline: 0;
+
+    color: #efffff;
+
+    font:
+        500 11px 'Plus Jakarta Sans',
+        Arial;
+}
+
+.input-wrap input::placeholder {
+    color: #65777d;
+}
+
+.field-icon {
+    color: #71878d;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   15. PASSWORD VISIBILITY
+========================================= */
+
+.eye-button {
+    border: 0;
+    background: none;
+    color: #81969b;
+    font-size: 15px;
+    padding: 4px;
+}
+
+
+/* =========================================
+   16. REMEMBER ME
+========================================= */
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #a7b8bc;
+    font-size: 10px;
+
+    margin: 4px 0 8px;
+}
+
+.remember input {
+    accent-color: #00dce9;
+    width: 13px;
+    height: 13px;
+}
+
+
+/* =========================================
+   17. PRIMARY BUTTON
+========================================= */
+
+.primary-button {
+    height: 44px;
+    width: 100%;
+
+    border: 0;
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #00d4e4,
+            #08b7c6
+        );
+
+    color: #042024;
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .2px;
+
+    box-shadow:
+        0 7px 20px rgba(0,203,218,.19);
+
+    transition:
+        transform .2s,
+        box-shadow .2s;
+}
+
+.primary-button span {
+    margin-left: 8px;
+    font-size: 15px;
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 26px rgba(0,218,231,.3);
+}
+
+.signup-submit {
+    margin-top: 10px;
+}
+
+.back-link {
+    align-self: center;
+    margin-top: 12px;
+}
+
+
+/* =========================================
+   18. SOCIAL LOGIN
+========================================= */
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 20px 0 13px;
+
+    color: #61777c;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #26363b;
+}
+
+.social-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.social-button {
+    height: 42px;
+
+    border: 1px solid #1e2b31;
+    border-radius: 9px;
+
+    background: #131e24;
+    color: #e7f5f6;
+
+    font-size: 17px;
+    transition: .2s;
+}
+
+.social-button:hover {
+    border-color: #00bdca;
+    background: #182a30;
+}
+
+.google-g {
+    font-weight: 800;
+
+    background:
+        conic-gradient(
+            #4285f4 0 25%,
+            #34a853 0 50%,
+            #fbbc05 0 75%,
+            #ea4335 0
+        );
+
+    background-clip: text;
+    color: transparent;
+}
+
+
+/* =========================================
+   19. FEEDBACK MESSAGES
+========================================= */
+
+.feedback {
+    min-height: 15px;
+    margin-top: 12px;
+
+    text-align: center;
+    font-size: 10px;
+
+    color: #80f2ce;
+}
+
+.feedback.error {
+    color: #ff9696;
+}
+
+
+/* =========================================
+   20. FOOTER
+========================================= */
+
+footer {
+    text-align: center;
+    color: #526c72;
+    font-size: 10px;
+    padding: 8px 0 0;
+}
+
+
+/* =========================================
+   21. TABLET RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 850px) {
+
+    .scene {
+        padding: 22px 5vw 15px;
+    }
+
+    .stage {
+        grid-template-columns: 1fr;
+        gap: 0;
+        min-height: auto;
+    }
+
+    .lamp-side {
+        height: 440px;
+    }
+
+    .lamp-art {
+        width: min(390px, 90vw);
+        max-height: 420px;
+    }
+
+    .auth-side {
+        margin: 0 0 28px;
+    }
+
+    .scene:not(.lit) .auth-side {
+        height: 0;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .pull-hint {
+        bottom: 5px;
+    }
+
+    .page-heading {
+        padding-bottom: 8px;
+    }
+}
+
+
+/* =========================================
+   22. MOBILE RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 480px) {
+
+    .page-heading h1 {
+        font-size: 24px;
+    }
+
+    .lamp-side {
+        height: 365px;
+    }
+
+    .lamp-art {
+        width: 310px;
+    }
+
+    .auth-card {
+        padding: 23px 18px 19px;
+        border-radius: 18px;
+    }
+
+    .card-heading h2 {
+        font-size: 24px;
+    }
+
+    .stage {
+        gap: 2px;
+    }
+}
+
+
+/* =========================================
+   23. REDUCED MOTION ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+
+}

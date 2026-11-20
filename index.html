@@ -1,0 +1,510 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#061619">
+
+    <title>Interactive Lamp Login / Signup</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="scene" id="scene">
+
+    <div class="stars" aria-hidden="true"></div>
+
+    <header class="page-heading">
+        <h1>Interactive Lamp Login / Signup</h1>
+    </header>
+
+    <section class="stage">
+
+        <!-- LEFT SIDE: INTERACTIVE LAMP -->
+
+        <div class="lamp-side">
+
+            <div class="ambient-glow"></div>
+
+            <svg class="lamp-art"
+                 viewBox="0 0 360 500"
+                 role="img"
+                 aria-label="Interactive desk lamp with pull cord">
+
+                <defs>
+
+                    <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#34444b"/>
+                        <stop offset=".48" stop-color="#101d23"/>
+                        <stop offset="1" stop-color="#050d12"/>
+                    </linearGradient>
+
+                    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0" stop-color="#17242a"/>
+                        <stop offset=".48" stop-color="#879397"/>
+                        <stop offset="1" stop-color="#18262b"/>
+                    </linearGradient>
+
+                    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#f4d88a"/>
+                        <stop offset=".5" stop-color="#a87932"/>
+                        <stop offset="1" stop-color="#4f371c"/>
+                    </linearGradient>
+
+                    <filter id="softGlow"
+                            x="-150%" y="-150%"
+                            width="400%" height="400%">
+
+                        <feGaussianBlur stdDeviation="13"/>
+
+                    </filter>
+
+                </defs>
+
+                <ellipse class="floor-shadow"
+                         cx="177" cy="450" rx="103" ry="17"/>
+
+                <g class="lamp-body">
+
+                    <!-- Lamp Base -->
+
+                    <path d="M91 438 Q176 412 262 438 Q267 451 250 458 Q176 480 101 458 Q83 451 91 438Z"
+                          fill="#101b20"
+                          stroke="#52636a"
+                          stroke-width="3"/>
+
+                    <ellipse cx="177" cy="439" rx="83" ry="13"
+                             fill="#27363c"
+                             stroke="#7b8889"
+                             stroke-width="2"/>
+
+                    <ellipse cx="177" cy="439" rx="67" ry="8"
+                             fill="#0a1216"/>
+
+
+                    <!-- Lower Arm -->
+
+                    <path d="M175 431 L145 290"
+                          stroke="#090f13"
+                          stroke-width="17"
+                          stroke-linecap="round"/>
+
+                    <path d="M175 431 L145 290"
+                          stroke="url(#metal)"
+                          stroke-width="10"
+                          stroke-linecap="round"/>
+
+                    <circle cx="145" cy="290" r="15"
+                            fill="url(#gold)"
+                            stroke="#392b19"
+                            stroke-width="4"/>
+
+                    <circle cx="145" cy="290" r="5"
+                            fill="#e8c46f"/>
+
+
+                    <!-- Upper Arm -->
+
+                    <path d="M145 290 L111 174"
+                          stroke="#0a1115"
+                          stroke-width="16"
+                          stroke-linecap="round"/>
+
+                    <path d="M145 290 L111 174"
+                          stroke="url(#metal)"
+                          stroke-width="9"
+                          stroke-linecap="round"/>
+
+                    <circle cx="111" cy="174" r="13"
+                            fill="url(#gold)"
+                            stroke="#3d2d18"
+                            stroke-width="4"/>
+
+                    <circle cx="111" cy="174" r="4"
+                            fill="#f4d88a"/>
+
+
+                    <!-- Lamp Shade -->
+
+                    <path d="M72 116 Q82 53 143 54 Q199 57 224 124 L243 172 Q245 187 225 191 L83 166 Q64 161 68 145Z"
+                          fill="url(#shade)"
+                          stroke="#52646b"
+                          stroke-width="3"/>
+
+                    <path d="M70 145 Q143 169 241 170 Q244 188 224 193 Q145 190 80 169 Q64 162 70 145Z"
+                          fill="#071116"
+                          stroke="#6a858b"
+                          stroke-width="3"/>
+
+                    <path d="M77 149 Q151 174 236 173"
+                          fill="none"
+                          stroke="#00dce9"
+                          stroke-width="3"
+                          opacity=".45"/>
+
+
+                    <!-- Bulb -->
+
+                    <ellipse class="bulb-halo"
+                             cx="158" cy="174"
+                             rx="45" ry="23"
+                             fill="#00eaff"
+                             filter="url(#softGlow)"
+                             opacity="0"/>
+
+                    <path class="bulb"
+                          d="M145 163 Q158 150 171 163 L174 178 Q158 187 142 178Z"
+                          fill="#27363b"
+                          stroke="#87999d"
+                          stroke-width="2"/>
+
+                    <ellipse class="bulb-core"
+                             cx="158" cy="177"
+                             rx="13" ry="5"
+                             fill="#52676b"/>
+
+                </g>
+
+
+                <!-- PULL CORD -->
+
+                <g id="pullCord" class="pull-cord">
+
+                    <path id="cordLine"
+                          d="M158 179 Q161 218 158 255"
+                          fill="none"
+                          stroke="#c8a45d"
+                          stroke-width="3"
+                          stroke-linecap="round"/>
+
+                    <circle id="cordPull"
+                            cx="158"
+                            cy="263"
+                            r="10"
+                            fill="url(#gold)"
+                            stroke="#f1d28a"
+                            stroke-width="2"
+                            tabindex="0"
+                            role="button"
+                            aria-label="Pull the lamp cord to switch the light on or off"/>
+
+                    <circle cx="155" cy="260" r="2.5"
+                            fill="#fff0bd"
+                            pointer-events="none"/>
+
+                </g>
+
+            </svg>
+
+            <p class="pull-hint" id="pullHint">
+                PULL THE CORD TO TURN ON THE LIGHT
+            </p>
+
+        </div>
+
+
+        <!-- RIGHT SIDE: LOGIN / SIGNUP -->
+
+        <div class="auth-side" id="authSide" aria-hidden="true">
+
+            <section class="auth-card">
+
+                <div class="card-heading">
+                    <h2 id="cardTitle">Welcome</h2>
+                    <p id="cardSubtitle">
+                        Sign in to continue to your account
+                    </p>
+                </div>
+
+
+                <!-- LOGIN / SIGNUP TABS -->
+
+                <div class="tabs" role="tablist">
+
+                    <button class="tab active"
+                            id="loginTab"
+                            type="button"
+                            role="tab"
+                            aria-selected="true">
+
+                        Sign In
+
+                    </button>
+
+                    <button class="tab"
+                            id="signupTab"
+                            type="button"
+                            role="tab"
+                            aria-selected="false">
+
+                        Sign Up
+
+                    </button>
+
+                </div>
+
+
+                <!-- LOGIN FORM -->
+
+                <form id="loginForm" class="auth-form">
+
+                    <label class="field-label" for="loginEmail">
+                        Username or Email
+                    </label>
+
+                    <div class="input-wrap">
+                        <span class="field-icon">♙</span>
+
+                        <input id="loginEmail"
+                               type="email"
+                               placeholder="Enter username or email"
+                               autocomplete="username"
+                               required>
+                    </div>
+
+
+                    <div class="label-row">
+
+                        <label class="field-label" for="loginPassword">
+                            Password
+                        </label>
+
+                        <button type="button"
+                                class="link-button"
+                                id="forgotLink">
+
+                            Forgot?
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">♙</span>
+
+                        <input id="loginPassword"
+                               type="password"
+                               placeholder="Enter password"
+                               autocomplete="current-password"
+                               minlength="6"
+                               required>
+
+                        <button type="button"
+                                class="eye-button"
+                                data-target="loginPassword"
+                                aria-label="Show password">
+
+                            ◉
+
+                        </button>
+
+                    </div>
+
+
+                    <label class="remember">
+
+                        <input type="checkbox" id="rememberMe" checked>
+
+                        <span>Remember me</span>
+
+                    </label>
+
+
+                    <button class="primary-button" type="submit">
+                        Sign In <span>➜</span>
+                    </button>
+
+                </form>
+
+
+                <!-- SIGNUP FORM -->
+
+                <form id="signupForm" class="auth-form hidden">
+
+                    <label class="field-label" for="signupName">
+                        Full Name
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">♙</span>
+
+                        <input id="signupName"
+                               type="text"
+                               placeholder="Enter your full name"
+                               autocomplete="name"
+                               minlength="3"
+                               required>
+
+                    </div>
+
+
+                    <label class="field-label" for="signupEmail">
+                        Email Address
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">✉</span>
+
+                        <input id="signupEmail"
+                               type="email"
+                               placeholder="Enter your email"
+                               autocomplete="email"
+                               required>
+
+                    </div>
+
+
+                    <label class="field-label" for="signupPassword">
+                        Password
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">♙</span>
+
+                        <input id="signupPassword"
+                               type="password"
+                               placeholder="Create password (min. 6 characters)"
+                               minlength="6"
+                               autocomplete="new-password"
+                               required>
+
+                        <button type="button"
+                                class="eye-button"
+                                data-target="signupPassword"
+                                aria-label="Show password">
+
+                            ◉
+
+                        </button>
+
+                    </div>
+
+
+                    <label class="field-label" for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">♙</span>
+
+                        <input id="confirmPassword"
+                               type="password"
+                               placeholder="Confirm your password"
+                               minlength="6"
+                               autocomplete="new-password"
+                               required>
+
+                    </div>
+
+
+                    <button class="primary-button signup-submit"
+                            type="submit">
+
+                        Create Account <span>➜</span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- FORGOT PASSWORD FORM -->
+
+                <form id="forgotForm" class="auth-form hidden">
+
+                    <label class="field-label" for="forgotEmail">
+                        Email Address
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">✉</span>
+
+                        <input id="forgotEmail"
+                               type="email"
+                               placeholder="Enter your registered email"
+                               required>
+
+                    </div>
+
+                    <button class="primary-button" type="submit">
+                        Reset Password <span>➜</span>
+                    </button>
+
+                    <button class="back-link"
+                            type="button"
+                            id="backToLogin">
+
+                        Back to Sign In
+
+                    </button>
+
+                </form>
+
+
+                <!-- SOCIAL LOGIN DISPLAY -->
+
+                <div class="divider">
+                    <span>OR CONTINUE WITH</span>
+                </div>
+
+                <div class="social-buttons">
+
+                    <button type="button"
+                            class="social-button"
+                            aria-label="Google sign in">
+
+                        <b class="google-g">G</b>
+
+                    </button>
+
+                    <button type="button"
+                            class="social-button"
+                            aria-label="GitHub sign in">
+
+                        <b>◉</b>
+
+                    </button>
+
+                    <button type="button"
+                            class="social-button"
+                            aria-label="Apple sign in">
+
+                        <b>●</b>
+
+                    </button>
+
+                </div>
+
+
+                <p class="feedback"
+                   id="feedback"
+                   role="status"
+                   aria-live="polite"></p>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
